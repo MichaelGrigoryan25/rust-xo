@@ -1,26 +1,27 @@
-use crate::board::Board;
+use crate::board::{Board, Player};
 
 pub fn print_board_string(board: &mut Board) {
-    let board_string: String = format!(
-        "
-        {:?} | {:?} | {:?}
-        {:?} | {:?} | {:?}
-        {:?} | {:?} | {:?}   
-        ",
-        &board.state[0].is_taken_by,
-        &board.state[1].is_taken_by,
-        &board.state[2].is_taken_by,
-        &board.state[3].is_taken_by,
-        &board.state[4].is_taken_by,
-        &board.state[5].is_taken_by,
-        &board.state[6].is_taken_by,
-        &board.state[7].is_taken_by,
-        &board.state[8].is_taken_by,
-    );
+    // Creating a new mutable string
+    let mut board_string = String::new();
 
-    println!("{}", board_string);
-}
+    // Looping through the state
+    for point in board.state.iter() {
+        // Checking by which player the spot is taken
+        let taken_by = match point.is_taken_by {
+            Player::X => "X",
+            Player::O => "O",
+            Player::NONE => "_",
+        };
 
-pub fn check_game_status(board: &mut Board) -> bool {
-    board.state.iter().any(|point| point.is_taken == false)
+        // Checking if the box is the last one in the row
+        // And building the game board
+        if point.y.eq(&2) {
+            board_string.push_str(&format!("{} \n", &taken_by))
+        } else {
+            board_string.push_str(&format!("{} | ", &taken_by))
+        }
+    }
+
+    // Printing the board
+    println!("{}", &board_string);
 }
