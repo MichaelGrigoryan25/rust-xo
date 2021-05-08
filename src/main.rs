@@ -6,7 +6,6 @@ mod utils;
 use moves::{cpu_make_move, user_make_move};
 
 fn main() {
-    // TODO: Implement game over
     // Creating a new board
     let mut board = Board::new();
 

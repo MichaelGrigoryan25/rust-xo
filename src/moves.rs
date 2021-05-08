@@ -40,9 +40,7 @@ pub fn user_make_move(board: &mut Board) {
         // Valid position
         Some(point) => {
             // If the position is not taken
-            if !point.is_taken {
-                point.is_taken = true;
-                point.is_taken_by = Player::O;
+            if point.is_taken_by == None {
                 print_board_string(board);
                 // check_game_over(board);
             } else {
@@ -59,7 +57,7 @@ pub fn cpu_make_move(board: &mut Board) {
     let randomly_chosen_point = board.state.choose(&mut thread_rng()).unwrap().clone();
 
     // If the point is taken
-    if randomly_chosen_point.is_taken {
+    if randomly_chosen_point.is_taken_by == Some(Player::O) {
         // CPU tries again
         cpu_make_move(board);
     } else {
@@ -68,8 +66,7 @@ pub fn cpu_make_move(board: &mut Board) {
             // When we find that point
             if (&point.x, &point.y).eq(&(&randomly_chosen_point.x, &randomly_chosen_point.y)) {
                 // Setting the parameters
-                point.is_taken = true;
-                point.is_taken_by = Player::X;
+                point.is_taken_by = Some(Player::X);
                 // And printing the chosen position
                 println!("CPU Chose Position: {:?}", (&point.y, &point.x));
                 break;

@@ -3,16 +3,20 @@
 pub enum Player {
     X,
     O,
-    NONE,
 }
 
-// A point on the board
-#[derive(Debug, Clone, Copy)]
+// Point on the board
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Point {
     pub x: u32,
     pub y: u32,
-    pub is_taken: bool,
-    pub is_taken_by: Player,
+    pub is_taken_by: Option<Player>,
+}
+
+impl Point {
+    pub fn new(x: u32, y: u32, is_taken_by: Option<Player>) -> Point {
+        Point { x, y, is_taken_by }
+    }
 }
 
 // Board which acts as the game state
@@ -30,13 +34,10 @@ impl Board {
         // Creating coordinates
         for x in 0..3 {
             for y in 0..3 {
+                // Creating a point
+                let point = Point::new(x, y, None);
                 // Pusing the point the the state list
-                state.push(Point {
-                    x,
-                    y,
-                    is_taken: false,
-                    is_taken_by: Player::NONE,
-                })
+                state.push(point)
             }
         }
 

@@ -1,46 +1,57 @@
-use crate::board::{Board, Player};
+use crate::board::{Board, Player, Point};
 
-// Private function for evaluating the result
-fn eval_winner(board: &mut Board) -> Option<Player> {
-    // For storing the rows
-    let mut rows: Vec<Vec<(u32, u32, bool, Player)>> = vec![];
-    // Mutable row variable that'll be pushed to `rows` vector
-    let mut current_row: Vec<(u32, u32, bool, Player)> = vec![];
+// Private function for creating a 2D array based on the board state
+fn generate_2d_row_vector(board: &mut Board) -> Vec<Vec<Point>> {
+    // For storing the rows - (2D array)
+    let mut rows: Vec<Vec<Point>> = vec![];
+    let mut current_row: Vec<Point> = vec![];
 
-    // Iterating through the points
-    for point in board.state.iter() {
-        if current_row.len() != 3 {
-            // Creating a tuple
-            let position = (point.x, point.y, point.is_taken, point.is_taken_by);
-            // Pusing the tuple to the row vector
-            current_row.push(position);
-        } else {
-            // Pushing the row to `rows` array
-            rows.push(current_row.clone());
-            // Emptying the vector
-            current_row.clear();
+    for point in &board.state {
+        current_row.push(*point);
+        if current_row.len() >= 3 {
+            rows.push(current_row);
+            current_row = Vec::with_capacity(3);
         }
     }
 
-    todo!()
+    // Returning the value
+    rows
+}
+
+// Private function for evaluating the winner
+fn eval_winner(rows: Vec<Vec<Point>>) -> Option<Player> {
+    // Looping through each row
+    for (i, row) in rows.iter().enumerate() {
+        // Looping through each position in the row
+        for (j, &position) in row.iter().enumerate() {
+            // TODO
+        }
+    }
+
+    // If the game doesn't have any winners yet
+    return None;
 }
 
 // Public function for returning a boolean if the game is over
 pub fn check_game_over(board: &mut Board) -> bool {
-    let eval = eval_winner(board);
+    // Generate a 2D vector of board rows
+    let rows = generate_2d_row_vector(board);
+    // Evaluated winner
+    let evaluation = eval_winner(rows);
 
-    match eval {
-        Some(Player::X) => {
-            println!("GAME OVER: WON ❌");
+    // Matching the result
+    match evaluation {
+        Some(player) => {
+            if player == Player::X {
+                println!("GAME OVER. WON X!");
+            } else if player == Player::O {
+                println!("GAME OVER. WON O!");
+            } else {
+                println!("GAME OVER. DRAW!");
+            }
+
             true
         }
-        Some(Player::O) => {
-            println!("GAME OVER: YOU WIN ⭕");
-            true
-        }
-        Some(Player::NONE) => {
-            todo!()
-        }
-        _ => todo!(),
+        None => false,
     }
 }

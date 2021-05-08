@@ -8,9 +8,14 @@ pub fn print_board_string(board: &mut Board) {
     for point in board.state.iter() {
         // Checking by which player the spot is taken
         let taken_by = match point.is_taken_by {
-            Player::X => "X",
-            Player::O => "O",
-            Player::NONE => "_",
+            Some(player) => {
+                if player == Player::X {
+                    "X"
+                } else {
+                    "O"
+                }
+            }
+            None => "_",
         };
 
         // Checking if the box is the last one in the row
