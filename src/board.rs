@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 // The player
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Player {
@@ -8,40 +10,46 @@ pub enum Player {
 // Point on the board
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Point {
-    pub x: u32,
-    pub y: u32,
     pub is_taken_by: Option<Player>,
-}
-
-impl Point {
-    pub fn new(x: u32, y: u32, is_taken_by: Option<Player>) -> Point {
-        Point { x, y, is_taken_by }
-    }
 }
 
 // Board which acts as the game state
 #[derive(Debug)]
 pub struct Board {
-    pub state: Vec<Point>,
+    pub state: [Option<Point>; 9],
 }
 
-impl Board {
-    // For creating a new board
-    pub fn new() -> Board {
-        // New state holder
-        let mut state: Vec<Point> = vec![];
+impl Display for Board {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // Creating a new mutable string
+        let mut board_string = String::new();
 
-        // Creating coordinates
-        for x in 0..3 {
-            for y in 0..3 {
-                // Creating a point
-                let point = Point::new(x, y, None);
-                // Pusing the point the the state list
-                state.push(point)
+        // Looping through the state
+        for (index, point) in self.state.iter().enumerate() {
+            // Checking by which player the spot is taken
+            let taken_by = match point.map(|p| p.is_taken_by).flatten() {
+                Some(Player::X) => "X".to_string(),
+                Some(Player::O) => "O".to_string(),
+                // If it's free then just using the index
+                None => index.to_string(),
+            };
+
+            // Checking if the box is the last one in the row
+            // And building the game board
+            if matches!(index, 2 | 5 | 8) {
+                board_string.push_str(&format!("{} \n", &taken_by))
+            } else {
+                board_string.push_str(&format!("{} | ", &taken_by))
             }
         }
 
         // Returning the board
-        Board { state }
+        f.write_str(&board_string)
+    }
+}
+
+impl Board {
+    pub fn new() -> Self {
+        Self { state: [None; 9] }
     }
 }

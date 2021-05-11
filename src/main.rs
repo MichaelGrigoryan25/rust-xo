@@ -1,8 +1,6 @@
 mod board;
 use board::Board;
-mod game_result;
 mod moves;
-mod utils;
 use moves::{cpu_make_move, user_make_move};
 
 fn main() {
