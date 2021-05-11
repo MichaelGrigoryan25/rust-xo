@@ -23,10 +23,12 @@ impl Display for Board {
         for (index, point) in self.state.iter().enumerate() {
             // Checking by which player the spot is taken
             let taken_by = match point {
-                Some(Player::X) => "X".to_string(),
-                Some(Player::O) => "O".to_string(),
+                Some(Player::X) => format!("{}", ansi_term::Color::Red.paint("X")).to_string(),
+                Some(Player::O) => format!("{}", ansi_term::Color::Blue.paint("O")).to_string(),
                 // If it's free then just using the index
-                None => index.to_string(),
+                None => {
+                    format!("{}", ansi_term::Color::Green.paint(format!("{}", &index))).to_string()
+                }
             };
 
             // Checking if the box is the last one in the row
