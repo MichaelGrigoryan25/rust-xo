@@ -1,24 +1,19 @@
 use std::fmt::Display;
 
-// The player
+/// The player
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Player {
     X,
     O,
 }
 
-// Point on the board
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Point {
-    pub is_taken_by: Option<Player>,
-}
-
-// Board which acts as the game state
+/// Board which acts as the game state
 #[derive(Debug)]
 pub struct Board {
-    pub state: [Option<Point>; 9],
+    pub state: [Option<Player>; 9],
 }
 
+/// Implementing Display trait for board to print it normally every time we want
 impl Display for Board {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         // Creating a new mutable string
@@ -27,7 +22,7 @@ impl Display for Board {
         // Looping through the state
         for (index, point) in self.state.iter().enumerate() {
             // Checking by which player the spot is taken
-            let taken_by = match point.map(|p| p.is_taken_by).flatten() {
+            let taken_by = match point {
                 Some(Player::X) => "X".to_string(),
                 Some(Player::O) => "O".to_string(),
                 // If it's free then just using the index
@@ -42,6 +37,9 @@ impl Display for Board {
                 board_string.push_str(&format!("{} | ", &taken_by))
             }
         }
+
+        // Divider
+        board_string.push_str("___________________");
 
         // Returning the board
         f.write_str(&board_string)
