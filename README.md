@@ -26,25 +26,23 @@ You are player `O`. You make a move after the computer(`X`).
 After the computer has made a move your command line will look like this
 
 ```bash
-CPU Chose Position: (1, 1)
-_ | _ | _
-_ | X | _
-_ | _ | _
-
-Enter the position(y, x):
-
+CPU made a move
+CPU HERE --> X | 1 | 2
+             3 | 4 | 5
+             6 | 7 | 8
+___________________
+Enter the number:  
+0
 ```
-
-The first box has the position of (0 <- Y axis, 0 <- X axis), thus all the positions are limited to have the maximum value of `2`.
 
 Let's say that we want to move to the center. In that case we'll just enter
 
 ```bash
-Enter the position(y, x):
-1,1
+Enter the number:
+4
 ```
 
-The positions must be separated with a comma(`,`) otherwise the game won't work
+And that's it!
 
 ## License
 
