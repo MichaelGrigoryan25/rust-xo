@@ -45,7 +45,7 @@ pub fn cpu_make_move(board: &mut Board) {
         let random_player_point = board.state.choose_mut(&mut rng).unwrap();
 
         if *random_player_point != None {
-            break;
+            continue;
         } else {
             *random_player_point = Some(Player::X);
             // Info
