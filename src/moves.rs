@@ -14,6 +14,7 @@ pub fn user_make_move(board: &mut Board) {
         stdin()
             .read_line(&mut position_string)
             .expect("Please enter a number");
+
         // Parsing the position as usize
         let position: usize = position_string
             .trim()
@@ -21,9 +22,9 @@ pub fn user_make_move(board: &mut Board) {
             .expect("Invalid argument type");
 
         // Checking if the number is in range
-        if position > 8 {
+        if &position > &8 {
             println!("Please enter a position from range 0-8!");
-            position_string.clear();
+            &position_string.clear();
         } else {
             // Getting the point
             let player_point = board.state.get_mut(position).unwrap();
@@ -37,7 +38,7 @@ pub fn user_make_move(board: &mut Board) {
             } else {
                 println!("That box is taken, choose another one.");
                 // Clearing the string
-                position_string.clear();
+                &position_string.clear();
                 continue;
             }
         };

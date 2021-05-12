@@ -20,13 +20,13 @@ fn main() {
 
         // If every position is taken and the winner is `None` it will be a draw
         if !all_taken && eval_winner(&mut board) == None {
-            println!("{}", Color::Yellow.paint("Draw!"));
+            println!("{}", &Color::Yellow.paint("Draw!"));
             break;
         } else if eval_winner(&mut board) == Some(Player::X) {
-            println!("{}", Color::Red.paint("X Wins!"));
+            println!("{}", &Color::Red.paint("X Wins!"));
             break;
         } else if eval_winner(&mut board) == Some(Player::O) {
-            println!("{}", Color::Blue.paint("O Wins!"));
+            println!("{}", &Color::Blue.paint("O Wins!"));
             break;
         } else {
             // Human's move
