@@ -1,5 +1,4 @@
 use rand::{prelude::SliceRandom, thread_rng};
-
 use crate::board::{Board, Player};
 use std::io::stdin;
 
