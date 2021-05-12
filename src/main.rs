@@ -31,7 +31,6 @@ fn main() {
         } else {
             // Human's move
             user_make_move(&mut board);
-            continue;
         }
     }
 }
