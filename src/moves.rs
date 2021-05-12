@@ -5,13 +5,14 @@ use std::io::stdin;
 
 /// Move function for the user
 pub fn user_make_move(board: &mut Board) {
-    // Getting the position
+    // Creating a new empty string
     let mut position_string = String::new();
 
     loop {
         println!("Enter the number: ");
+        // Reading the input
         stdin().read_line(&mut position_string).unwrap();
-        // Parsing the position
+        // Parsing the position as usize
         let position: usize = position_string.trim().parse().unwrap();
 
         // Checking if the number is in range
@@ -23,13 +24,14 @@ pub fn user_make_move(board: &mut Board) {
             let player_point = board.state.get_mut(position).unwrap();
 
             if *player_point == None {
-                // TODO: Fix the bug that occurs here
+                // Occupying the place
                 *player_point = Some(Player::O);
                 // Printing the board
                 println!("{}", &board);
                 break;
             } else {
                 println!("That box is taken, choose another one.");
+                // Clearing the string
                 position_string.clear();
                 continue;
             }
@@ -41,12 +43,13 @@ pub fn user_make_move(board: &mut Board) {
 pub fn cpu_make_move(board: &mut Board) {
     loop {
         // Choosing a random point from the game state and cloning it
-        let mut rng = thread_rng();
-        let random_player_point = board.state.choose_mut(&mut rng).unwrap();
+        let random_player_point = board.state.choose_mut(&mut thread_rng()).unwrap();
 
+        // If the point is occupied
         if *random_player_point != None {
             continue;
         } else {
+            // Occupying the point
             *random_player_point = Some(Player::X);
             // Info
             println!("CPU made a move");

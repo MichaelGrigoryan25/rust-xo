@@ -1,5 +1,6 @@
 mod board;
 use board::Board;
+mod logic;
 mod moves;
 use moves::{cpu_make_move, user_make_move};
 
