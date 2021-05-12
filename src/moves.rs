@@ -11,9 +11,14 @@ pub fn user_make_move(board: &mut Board) {
     loop {
         println!("Enter the number: ");
         // Reading the input
-        stdin().read_line(&mut position_string).unwrap();
+        stdin()
+            .read_line(&mut position_string)
+            .expect("Please enter a number");
         // Parsing the position as usize
-        let position: usize = position_string.trim().parse().unwrap();
+        let position: usize = position_string
+            .trim()
+            .parse()
+            .expect("Invalid argument type");
 
         // Checking if the number is in range
         if position > 8 {
