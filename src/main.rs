@@ -1,10 +1,7 @@
-mod board;
-mod logic;
-mod moves;
 use ansi_term::Color;
-use board::{Board, Player};
-use logic::eval_winner;
-use moves::{cpu_make_move, user_make_move};
+use rust_xo::board::{Board, Player};
+use rust_xo::logic::eval_winner;
+use rust_xo::moves::{cpu_make_move, user_make_move};
 
 fn main() {
     // Creating a new board
